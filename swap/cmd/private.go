@@ -6,10 +6,15 @@
 package main
 
 import (
+	"bytes"
+	"fmt"
+	"os/exec"
+
 	"github.com/seeleteam/go-seele/cmd/util"
 	"github.com/seeleteam/go-seele/common"
 	"github.com/seeleteam/go-seele/p2p"
 	"github.com/seeleteam/go-seele/rpc2"
+	"github.com/urfave/cli"
 )
 
 func GetTxPoolContentAction(client *rpc.Client) (interface{}, error) {
@@ -148,9 +153,27 @@ func GetDumpHeap(client *rpc.Client) (interface{}, error) {
 	return result, err
 }
 
-// Participate
-func Participate(client *rpc.Client) (interface{}, error) {
-	var result bool
-	err := client.Call(&result, "miner_start", threadsValue)
-	return result, err
+// Swap is swap of seele and eth
+func Swap(c *cli.Context) error {
+	cmd := exec.Command("./solc.exe", "--bin", "./atomicswap.sol")
+	fmt.Println("args:", cmd.Args)
+	fmt.Println("path:", cmd.Path)
+	fmt.Println("dir:", cmd.Dir)
+	fmt.Println("starting ------------------")
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	err := cmd.Run()
+	fmt.Println("starting run over err:------------------:", err)
+	if err != nil {
+		return err
+	}
+
+	// data, err := cmd.Output()
+	// fmt.Println("starting data over err:------------------:", err,"data byte:",data)
+	// if err != nil {
+	// 	return err
+	// }
+	fmt.Println("data:", out.String())
+
+	return nil
 }

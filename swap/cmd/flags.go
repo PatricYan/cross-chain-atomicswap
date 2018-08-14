@@ -165,10 +165,31 @@ var (
 		Destination: &dumpFileValue,
 	}
 
-	secretHashValue string
-	secretHashFlag  = cli.StringFlag{
-		Name:        "secretHash",
-		Usage:       "secretHash is the secret Hash",
-		Destination: &secretHashValue,
+	fromSeeleValue string
+	fromSeeleFlag  = cli.StringFlag{
+		Name:        "fromseele",
+		Usage:       "from seele address",
+		Destination: &fromSeeleValue,
+	}
+
+	toSeeleValue string
+	toSeeleFlag  = cli.StringFlag{
+		Name:        "toseele",
+		Usage:       "to seele address",
+		Destination: &toSeeleValue,
+	}
+
+	fromETHValue string
+	fromETHFlag  = cli.StringFlag{
+		Name:        "fromETH",
+		Usage:       "from ETH address",
+		Destination: &fromETHValue,
+	}
+
+	toETHValue string
+	toETHFlag  = cli.StringFlag{
+		Name:        "toETH",
+		Usage:       "to ETH address",
+		Destination: &toETHValue,
 	}
 )

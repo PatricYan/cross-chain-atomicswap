@@ -15,44 +15,6 @@ import (
 func main() {
 	app := cli.NewApp()
 
-	swap := cli.Command{
-		Name:  "swap",
-		Usage: "atomswap command",
-		Subcommands: []cli.Command{
-			{
-				Name:  "initiate",
-				Usage: "initiate atomswap",
-				Flags: []cli.Flag{
-					addressFlag,
-					accountFlag,
-					amountFlag,
-				},
-				Action: RPCAction(StartMinerAction),
-			},
-			{
-				Name:  "audit",
-				Usage: "audit atomswap contract initiated by others",
-				Flags: []cli.Flag{
-					addressFlag,
-					accountFlag,
-					amountFlag,
-				},
-				Action: RPCAction(StartMinerAction),
-			},
-			{
-				Name:  "participate",
-				Usage: "participate initiate atomswap",
-				Flags: []cli.Flag{
-					addressFlag,
-					accountFlag,
-					amountFlag,
-					secretHashFlag,
-				},
-				Action: RPCAction(StartMinerAction),
-			},
-		},
-	}
-
 	minerCommands := cli.Command{
 		Name:  "miner",
 		Usage: "miner command",
@@ -167,7 +129,6 @@ func main() {
 	}
 
 	app.Commands = []cli.Command{
-		swap,
 		minerCommands,
 		p2pCommands,
 		{
@@ -363,6 +324,21 @@ func main() {
 				dumpFileFlag,
 			},
 			Action: RPCAction(GetDumpHeap),
+		},
+
+		{
+			Name:  "swap",
+			Usage: "swap seele and eth",
+			Flags: []cli.Flag{
+				addressFlag,
+				fromSeeleFlag,
+				toSeeleFlag,
+				fromETHFlag,
+				toETHFlag,
+				amountFlag,
+				feeFlag,
+			},
+			Action: Swap,
 		},
 	}
 
