@@ -10,8 +10,8 @@ import (
 
 // SeeleContract is a type of seelecontract to parse the function
 type SeeleContract struct {
-	address common.Address // Deployment address of the contract on the seele blockchain
-	abi     abi.ABI        // Reflect based ABI to access the correct Ethereum methods
+	Address common.Address // Deployment address of the contract on the seele blockchain
+	Abi     abi.ABI        // Reflect based ABI to access the correct Ethereum methods
 }
 
 // NewSeeleContract Create a seelecontract
@@ -22,8 +22,8 @@ func NewSeeleContract(address common.Address) (*SeeleContract, error) {
 	}
 
 	return nil, &SeeleContract{
-		address: address,
-		abi:     parsed,
+		Address: address,
+		Abi:     parsed,
 	}
 }
 
@@ -57,6 +57,6 @@ func (seele *SeeleContract) Withdraw(_contractId [32]byte, _preimage [32]byte) (
 	return getFuncByteCode("withdraw", _contractId, _preimage)
 }
 
-func getFuncByteCode(method string, params ...interface{}) ([]byte, error) {
-	return seele.abi.Pack(method, params...)
+func (seele *SeeleContract) getFuncByteCode(method string, params ...interface{}) ([]byte, error) {
+	return seele.Abi.Pack(method, params...)
 }
